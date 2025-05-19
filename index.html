@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beranda - Toko Sepatu Impian</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Warna tema toko sepatu (Anda bisa sesuaikan) */
+        :root {
+            --primary-color: #007bff; /* Biru utama */
+            --secondary-color: #6c757d; /* Abu-abu sekunder */
+            --accent-color: #28a745; /* Hijau aksen */
+            --text-color: #343a40; /* Warna teks utama */
+            /* --background-color: #f8f9fa; /* Warna latar belakang awal */
+            --background-color: #e0f7fa; /* Contoh: Warna biru muda */
+            /* Anda bisa mencoba warna lain seperti: */
+            /* --background-color: #f0f8ff; /* LightCyan */
+            /* --background-color: #fffafa; /* Snow */
+            /* --background-color: #f5f5dc; /* Beige */
+        }
+
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+
+        nav li {
+            margin: 0 1rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            color: white;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .featured-products-section {
+            background-color: white;
+            padding: 2rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .featured-products .container {
+            padding: 1rem;
+        }
+
+        .featured-products h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+
+        .product-item:hover {
+            transform: scale(1.02);
+        }
+
+        .product-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            display: block;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .product-item:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .product-info {
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .product-info h3 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-size: 1.1rem;
+        }
+
+        .product-info .price {
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+        }
+
+        .button.secondary {
+            background-color: var(--secondary-color);
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Toko Sepatu Impian Anda</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="shop.html">Produk</a></li>
+                <li><a href="about.html">Tentang Kami</a></li>
+                <li><a href="contact.html">Kontak</a></li>
+                <li><a href="register.html">Daftar</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="container">
+        <section class="hero">
+            <h2>Temukan Sepatu Terbaik untuk Setiap Langkah Anda</h2>
+            <p>Koleksi sepatu terbaru dan terlengkap dengan kualitas terjamin.</p>
+            <a href="shop.html" class="button">Lihat Koleksi</a>
+        </section>
+
+        <section class="featured-products-section">
+            <div class="container">
+
+
+                <section class="featured-products">
+                    <h2>Produk Unggulan Kami</h2>
+                    <div class="product-grid">
+                        <div class="product-item">
+                            <div class="product-image">
+                                <img src="gambarsepatu2_thumb1.png" alt="Sneakers Kasual Harian">
+                                <div class="overlay"></div>
+                            </div>
+                            <div class="product-info">
+                                <h3>Sneakers Kasual Harian</h3>
+                                <p class="price">Rp 199.000</p>
+                                <a href="detail_sepatu2.html" class="button secondary">Lihat Detail</a>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-image">
+                                <img src="gambarsepatu5_thumb1.png" alt="Boots Petualangan">
+                                <div class="overlay"></div>
+                            </div>
+                            <div class="product-info">
+                                <h3>Sepatu Formal Elegan</h3>
+                                <p class="price">Rp 599.000</p>
+                                <a href="detail_sepatu5.html" class="button secondary">Lihat Detail</a>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-image">
+                                <img src="gambarsepatu7_thumb1.png" alt="Sepatu Basket Profesional">
+                                <div class="overlay"></div>
+                            </div>
+                            <div class="product-info">
+                                <h3>Sepatu Basket Profesional</h3>
+                                <p class="price">Rp 699.000</p>
+                                <a href="detail_sepatu7.html" class="button secondary">Lihat Detail</a>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-image">
+                                <img src="gambarsepatu8_thumb1.png" alt="Wedges Cantik">
+                                <div class="overlay"></div>
+                            </div>
+                            <div class="product-info">
+                                <h3>Wedges Cantik</h3>
+                                <p class="price">Rp 249.000</p>
+                                <a href="detail_sepatu8.html" class="button secondary">Lihat Detail</a>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-image">
+                                <img src="gambarsepatu9_thumb1.png" alt="Flat Shoes Modis">
+                                <div class="overlay"></div>
+                            </div>
+                            <div class="product-info">
+                                <h3>Flat Shoes Modis</h3>
+                                <p class="price">Rp 129.000</p>
+                                <a href="detail_sepatu9.html" class="button secondary">Lihat Detail</a>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-image">
+                                <img src="gambarsepatu10_thumb1.png" alt="Sepatu Gunung Tangguh">
+                                <div class="overlay"></div>
+                            </div>
+                            <div class="product-info">
+                                <h3>Sepatu Gunung Tangguh</h3>
+                                <p class="price">Rp 549.000</p>
+                                <a href="detail_sepatu10.html" class="button secondary">Lihat Detail</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Toko Sepatu Impian Anda</p>
+    </footer>
+</body>
+</html>

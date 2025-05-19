@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice - Toko Sepatu Impian</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/invoice_style.css">
+</head>
+<body>
+    <header>
+        <h1>Invoice</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="shop.html">Produk</a></li>
+                <li><a href="about.html">Tentang Kami</a></li>
+                <li><a href="contact.html">Kontak</a></li>
+                <li><a href="register.html">Daftar</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="container invoice-page">
+        <h2>Terima Kasih Atas Pesanan Anda!</h2>
+        <div class="customer-info">
+            <h3>Informasi Pelanggan</h3>
+            <p><strong>Nama:</strong> <span id="invoice-nama"></span></p>
+            <p><strong>Email:</strong> <span id="invoice-email"></span></p>
+            <p><strong>Telepon:</strong> <span id="invoice-telepon"></span></p>
+            <p><strong>Alamat:</strong> <span id="invoice-alamat"></span>, <span id="invoice-kota"></span>, <span id="invoice-kodepos"></span></p>
+        </div>
+
+        <div class="order-summary">
+            <h3>Rincian Pesanan</h3>
+            <ul id="invoice-products">
+                </ul>
+            </div>
+
+        <p class="thank-you">Terima kasih telah berbelanja di Toko Sepatu Impian Anda. Pesanan Anda akan segera kami proses.</p>
+    </main>
+    <footer>
+        <p>&copy; 2025 Toko Sepatu Impian Anda</p>
+    </footer>
+
+    <script>
+        function displayInvoice() {
+            const customerInfo = JSON.parse(localStorage.getItem('customerInfo'));
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const productList = document.getElementById('invoice-products');
+
+            if (customerInfo) {
+                document.getElementById('invoice-nama').textContent = customerInfo.nama;
+                document.getElementById('invoice-email').textContent = customerInfo.email;
+                document.getElementById('invoice-telepon').textContent = customerInfo.telepon;
+                document.getElementById('invoice-alamat').textContent = customerInfo.alamat;
+                document.getElementById('invoice-kota').textContent = customerInfo.kota;
+                document.getElementById('invoice-kodepos').textContent = customerInfo.kodepos;
+            }
+
+            if (cart.length > 0) {
+                cart.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `<strong>${item.name}</strong> - Rp ${item.price.toLocaleString('id-ID')} x ${item.quantity}`;
+                    productList.appendChild(listItem);
+                });
+            } else {
+                const listItem = document.createElement('li');
+                listItem.textContent = 'Tidak ada produk dalam pesanan.';
+                productList.appendChild(listItem);
+            }
+
+            // Bersihkan keranjang dan info pelanggan setelah menampilkan invoice (opsional)
+            localStorage.removeItem('cart');
+            localStorage.removeItem('customerInfo');
+        }
+
+        window.onload = displayInvoice;
+    </script>
+</body>
+</html>

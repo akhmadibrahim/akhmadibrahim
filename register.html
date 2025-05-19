@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar - Toko Sepatu Impian</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Style untuk container aksi produk (tetap sama) */
+        .product-actions {
+            display: flex;
+            gap: 10px; /* Jarak antar tombol */
+            margin-top: 20px;
+        }
+
+        /* Style dasar untuk semua tombol (tetap sama) */
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none; /* Menghilangkan garis bawah pada tautan jika digunakan */
+            color: white; /* Warna teks default */
+            text-align: center; /* Agar teks di tengah tombol */
+        }
+
+        /* Style untuk tombol primary (tetap sama) */
+        .button.primary {
+            background-color: #007bff; /* Warna biru */
+        }
+
+        .button.primary:hover {
+            background-color: #0056b3;
+        }
+
+        /* Style untuk tombol secondary (tetap sama) */
+        .button.secondary {
+            background-color: #6c757d; /* Warna abu-abu */
+        }
+
+        .button.secondary:hover {
+            background-color: #545b62;
+        }
+
+        /* Style untuk tombol wishlist (tetap sama) */
+        .button.wishlist {
+            background-color: #dc3545; /* Warna merah */
+        }
+
+        .button.wishlist:hover {
+            background-color: #c82333;
+        }
+
+        /* Style untuk ikon wishlist (tetap sama) */
+        .button.wishlist::before {
+            /* Contoh jika Anda ingin menggunakan ikon hati */
+            /* content: "\f004"; */
+            /* font-family: "Font Awesome 5 Free"; */
+            /* font-weight: 400; */
+            /* margin-right: 5px; */
+        }
+
+        /* Style untuk peringatan error */
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        /* Style untuk tombol daftar yang non-aktif */
+        .button.disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            color: #666666;
+        }
+
+        .button.disabled:hover {
+            background-color: #cccccc;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const daftarLinkNav = document.querySelector('nav ul li:last-child a');
+            if (daftarLinkNav) {
+                daftarLinkNav.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    window.location.href = 'index.html';
+                });
+            }
+
+            const usernameInput = document.getElementById('username');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirm_password');
+            const daftarButton = document.querySelector('.register-form .button.secondary'); // Target tombol daftar yang benar
+            const form = document.querySelector('.register-form form');
+
+            // Fungsi untuk memeriksa apakah semua input valid
+            function checkInputs() {
+                const isUsernameValid = usernameInput.value.trim() !== '';
+                const isEmailValid = emailInput.value.trim() !== '' && emailInput.validity.valid;
+                const isPasswordValid = passwordInput.value.trim().length >= 6; // Contoh: minimal 6 karakter
+                const isConfirmPasswordValid = confirmPasswordInput.value === passwordInput.value && confirmPasswordInput.value.trim() !== '';
+
+                return isUsernameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid;
+            }
+
+            // Fungsi untuk mengaktifkan/non-aktifkan tombol daftar
+            function updateDaftarButton() {
+                if (checkInputs()) {
+                    daftarButton.classList.remove('disabled');
+                    daftarButton.removeAttribute('aria-disabled');
+                    daftarButton.href = 'index.html'; // Aktifkan kembali tautan
+                } else {
+                    daftarButton.classList.add('disabled');
+                    daftarButton.setAttribute('aria-disabled', 'true');
+                    daftarButton.removeAttribute('href'); // Non-aktifkan tautan
+                }
+            }
+
+            // Tambahkan event listener untuk setiap input
+            usernameInput.addEventListener('input', updateDaftarButton);
+            emailInput.addEventListener('input', updateDaftarButton);
+            passwordInput.addEventListener('input', updateDaftarButton);
+            confirmPasswordInput.addEventListener('input', updateDaftarButton);
+
+            // Validasi email secara langsung
+            emailInput.addEventListener('input', function() {
+                const emailError = document.getElementById('email-error');
+                if (!this.validity.valid) {
+                    if (!emailError) {
+                        const errorSpan = document.createElement('span');
+                        errorSpan.id = 'email-error';
+                        errorSpan.classList.add('error-message');
+                        errorSpan.textContent = 'Format email tidak valid.';
+                        this.parentNode.appendChild(errorSpan);
+                    } else {
+                        emailError.textContent = 'Format email tidak valid.';
+                    }
+                } else {
+                    if (emailError) {
+                        emailError.remove();
+                    }
+                }
+                updateDaftarButton();
+            });
+
+            // Validasi kesamaan password
+            confirmPasswordInput.addEventListener('input', function() {
+                const passwordError = document.getElementById('password-error');
+                if (this.value !== passwordInput.value) {
+                    if (!passwordError) {
+                        const errorSpan = document.createElement('span');
+                        errorSpan.id = 'password-error';
+                        errorSpan.classList.add('error-message');
+                        errorSpan.textContent = 'Konfirmasi kata sandi tidak cocok.';
+                        this.parentNode.appendChild(errorSpan);
+                    } else {
+                        passwordError.textContent = 'Konfirmasi kata sandi tidak cocok.';
+                    }
+                } else {
+                    if (passwordError) {
+                        passwordError.remove();
+                    }
+                }
+                updateDaftarButton();
+            });
+
+            // Validasi panjang password
+            passwordInput.addEventListener('input', function() {
+                const passwordLengthError = document.getElementById('password-length-error');
+                if (this.value.trim().length < 6) {
+                    if (!passwordLengthError) {
+                        const errorSpan = document.createElement('span');
+                        errorSpan.id = 'password-length-error';
+                        errorSpan.classList.add('error-message');
+                        errorSpan.textContent = 'Kata sandi minimal 6 karakter.';
+                        this.parentNode.appendChild(errorSpan);
+                    } else {
+                        passwordLengthError.textContent = 'Kata sandi minimal 6 karakter.';
+                    }
+                } else {
+                    if (passwordLengthError) {
+                        passwordLengthError.remove();
+                    }
+                }
+                updateDaftarButton();
+            });
+
+            // Panggil updateDaftarButton saat halaman pertama kali dimuat
+            updateDaftarButton();
+
+            // Mencegah pengiriman form jika tombol daftar masih non-aktif
+            form.addEventListener('submit', function(event) {
+                if (daftarButton.classList.contains('disabled')) {
+                    event.preventDefault();
+                    alert('Harap isi formulir dengan benar.');
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('keydown', function(event) {
+            if (event.key.toLowerCase() === 'd' && !event.repeat) {
+                let inputBuffer = 'd';
+                setTimeout(function() {
+                    inputBuffer = '';
+                }, 1000);
+
+                document.addEventListener('keydown', function checkA(eventA) {
+                    if (eventA.key.toLowerCase() === 'a' && inputBuffer === 'd' && !eventA.repeat) {
+                        inputBuffer += 'a';
+                        setTimeout(function() {
+                            inputBuffer = '';
+                        }, 1000);
+
+                        document.addEventListener('keydown', function checkF(eventF) {
+                            if (eventF.key.toLowerCase() === 'f' && inputBuffer === 'da' && !eventF.repeat) {
+                                inputBuffer += 'f';
+                                setTimeout(function() {
+                                    inputBuffer = '';
+                                }, 1000);
+
+                                document.addEventListener('keydown', function checkT(eventT) {
+                                    if (eventT.key.toLowerCase() === 't' && inputBuffer === 'daf' && !eventT.repeat) {
+                                        inputBuffer += 't';
+                                        setTimeout(function() {
+                                            inputBuffer = '';
+                                        }, 1000);
+
+                                        document.addEventListener('keydown', function checkA2(eventA2) {
+                                            if (eventA2.key.toLowerCase() === 'a' && inputBuffer === 'daft' && !eventA2.repeat) {
+                                                inputBuffer += 'a';
+                                                setTimeout(function() {
+                                                    inputBuffer = '';
+                                                }, 1000);
+
+                                                document.addEventListener('keydown', function checkR(eventR) {
+                                                    if (eventR.key.toLowerCase() === 'r' && inputBuffer === 'dafta' && !eventR.repeat) {
+                                                        window.location.href = 'index.html';
+                                                        document.removeEventListener('keydown', checkA);
+                                                        document.removeEventListener('keydown', checkF);
+                                                        document.removeEventListener('keydown', checkT);
+                                                        document.removeEventListener('keydown', checkA2);
+                                                        document.removeEventListener('keydown', checkR);
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Daftar Akun Baru</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="shop.html">Produk</a></li>
+                <li><a href="about.html">Tentang Kami</a></li>
+                <li><a href="contact.html">Kontak</a></li>
+                <li><a href="register.html">Daftar</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="container">
+        <section class="register-form">
+            <h2>Buat Akun Anda</h2>
+            <form action="#" method="post">
+                <div class="form-group">
+                    <label for="username">Nama Pengguna:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Kata Sandi:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Konfirmasi Kata Sandi:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                </div>
+                <a href="index.html" class="button secondary disabled" aria-disabled="true">Daftar</a>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Toko Sepatu Impian Anda</p>
+    </footer>
+</body>
+</html>

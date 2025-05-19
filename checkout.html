@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Toko Sepatu Impian</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/checkout_style.css">
+</head>
+<body>
+    <header>
+        <h1>Checkout</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="shop.html">Produk</a></li>
+                <li><a href="about.html">Tentang Kami</a></li>
+                <li><a href="contact.html">Kontak</a></li>
+                <li><a href="register.html">Daftar</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="container checkout-page">
+        <h2>Informasi Pengiriman</h2>
+        <form id="checkout-form">
+            <div class="form-group">
+                <label for="nama">Nama Lengkap:</label>
+                <input type="text" id="nama" name="nama" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="telepon">Nomor Telepon:</label>
+                <input type="tel" id="telepon" name="telepon" required>
+            </div>
+            <div class="form-group">
+                <label for="alamat">Alamat Lengkap:</label>
+                <textarea id="alamat" name="alamat" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="kota">Kota:</label>
+                <input type="text" id="kota" name="kota" required>
+            </div>
+            <div class="form-group">
+                <label for="kodepos">Kode Pos:</label>
+                <input type="text" id="kodepos" name="kodepos" required>
+            </div>
+            <button type="button" class="button" onclick="prosesCheckout()">Kirim Pesanan</button>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2025 Toko Sepatu Impian Anda</p>
+    </footer>
+
+    <script>
+        function prosesCheckout() {
+            const formData = {
+                nama: document.getElementById('nama').value,
+                email: document.getElementById('email').value,
+                telepon: document.getElementById('telepon').value,
+                alamat: document.getElementById('alamat').value,
+                kota: document.getElementById('kota').value,
+                kodepos: document.getElementById('kodepos').value
+            };
+
+            localStorage.setItem('customerInfo', JSON.stringify(formData));
+            window.location.href = 'invoice.html';
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemCountSpan = document.getElementById('cart-item-count');
+            if (cartItemCountSpan) {
+                const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+                cartItemCountSpan.textContent = totalQuantity;
+            }
+        }
+
+        window.onload = updateCartCount;
+    </script>
+</body>
+</html>
